@@ -61,7 +61,7 @@ async function commitDirtyWorktree($, settings) {
   const status = (await $`git -C ${settings.worktree} status --porcelain`.text()).trim()
   if (!status) return false
 
-  await $`git -C ${settings.worktree} add -A`
+  await $`git -C ${settings.worktree} add -A 2> /dev/null`
   await $`env GIT_AUTHOR_NAME=${settings.name} GIT_AUTHOR_EMAIL=${settings.email} GIT_COMMITTER_NAME=${settings.name} GIT_COMMITTER_EMAIL=${settings.email} git -C ${settings.worktree} commit -m ${settings.message} 2> /dev/null`
   return true
 }
